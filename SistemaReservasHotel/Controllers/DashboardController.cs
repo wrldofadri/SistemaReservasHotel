@@ -23,7 +23,7 @@ namespace SistemaReservasHotel.Controllers
             ViewBag.TotalUsuarios = await _context.Users.CountAsync();
             ViewBag.TotalReservas = await _context.Reservas.CountAsync();
 
-   
+  
             var reservasPorMes = _context.Reservas
                 .GroupBy(r => r.FechaInicio.Month)
                 .Select(g => new { Mes = g.Key, Cantidad = g.Count() })
