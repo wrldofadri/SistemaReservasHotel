@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Panel Administrativo";
+}
+
+<div class="container mt-4">
+    <h2>📊 Dashboard del Sistema</h2>
+    <hr />
+
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white mb-3">
+                <div class="card-body">
+                    <h3>@ViewBag.TotalHoteles</h3>
+                    <p>Hoteles Registrados</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white mb-3">
+                <div class="card-body">
+                    <h3>@ViewBag.TotalUsuarios</h3>
+                    <p>Usuarios en el Sistema</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-warning text-dark mb-3">
+                <div class="card-body">
+                    <h3>@ViewBag.TotalReservas</h3>
+                    <p>Reservas Realizadas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">📈 Reservas por Mes</div>
+                <div class="card-body">
+                    <canvas id="graficoReservas" style="max-height: 400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('graficoReservas').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(ViewBag.GraficoEtiquetas)),
+                datasets: [{
+                    label: 'Cantidad de Reservas',
+                    data: @Html.Raw(Json.Serialize(ViewBag.GraficoDatos)),
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                }]
+            }
+        });
+    </script>
+}
